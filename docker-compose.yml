@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: project-manager-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: project_manager
+      POSTGRES_USER: project_manager_user
+      POSTGRES_PASSWORD: project_manager_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
