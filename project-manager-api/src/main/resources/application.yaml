@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: project-manager
+  datasource:
+    url: jdbc:postgresql://localhost:5432/project_manager
+    username: project_manager_user
+    password: project_manager_password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
