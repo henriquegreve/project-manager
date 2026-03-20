@@ -1,4 +1,4 @@
-# Project Manager (Desbravador)
+# Project Manager
 
 Este repositorio contem 2 APIs REST (Spring Boot) que trabalham juntas:
 
