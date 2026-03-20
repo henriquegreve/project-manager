@@ -165,7 +165,6 @@ class ProjectControllerTest {
 
         when(projectService.findAll(isNull(), isNull(), any())).thenReturn(page);
 
-        // sort em formato JSON-like: sort=["name"]
         mockMvc.perform(get("/api/projects?page=0&size=1&sort=%5B%22name%22%5D"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].id").value(1));

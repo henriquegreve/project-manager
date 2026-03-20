@@ -107,7 +107,6 @@ class PortfolioReportServiceTest {
 
         PortfolioReportDTO report = reportService.generateReport();
 
-        // p1: 90 days, p2: 181 days -> average = (90 + 181) / 2 = 135.5
         assertEquals(135.5, report.getAverageDurationOfClosedProjects());
     }
 }

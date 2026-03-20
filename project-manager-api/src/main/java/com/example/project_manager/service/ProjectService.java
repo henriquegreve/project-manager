@@ -69,7 +69,7 @@ public class ProjectService {
     @Transactional
     public ProjectResponseDTO update(Long id, ProjectRequestDTO dto) {
         Project project = findEntityById(id);
-        // Reaproveita o gerente consultado para evitar chamada duplicada na montagem da resposta
+
         MemberResponseDTO manager = membersApiClient.findById(dto.getManagerId());
         if (!MANAGER_ROLE.equalsIgnoreCase(manager.getRole())) {
             throw new BusinessRuleException("managerId deve referenciar um membro com atribuição 'gerente'");
@@ -113,7 +113,6 @@ public class ProjectService {
     public ProjectResponseDTO addMembers(Long projectId, List<Long> memberIds) {
         Project project = findEntityById(projectId);
 
-        // Dedupe preservando ordem (comportamento previsível em caso de erro)
         Set<Long> distinctIds = memberIds.stream()
                 .filter(Objects::nonNull)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
@@ -122,7 +121,6 @@ public class ProjectService {
             throw new BusinessRuleException("Nenhum memberId informado");
         }
 
-        // Busca DTOs uma vez e valida role (fail-fast)
         Map<Long, MemberResponseDTO> memberDtoById = new HashMap<>();
         for (Long memberId : distinctIds) {
             MemberResponseDTO member = membersApiClient.findById(memberId);
@@ -133,7 +131,6 @@ public class ProjectService {
             memberDtoById.put(memberId, member);
         }
 
-        // Considera que o Set do projeto evita duplicatas
         Set<Long> idsToAdd = distinctIds.stream()
                 .filter(id -> !project.getMemberIds().contains(id))
                 .collect(Collectors.toCollection(LinkedHashSet::new));
@@ -155,10 +152,8 @@ public class ProjectService {
             project.getMemberIds().add(memberId);
         }
 
-        // Salva apenas uma vez após validar e adicionar todos os membros.
         Project savedProject = projectRepository.save(project);
 
-        // Reaproveita os DTOs já consultados para evitar chamadas duplicadas.
         return buildResponseDTO(savedProject, null, memberDtoById);
     }
 

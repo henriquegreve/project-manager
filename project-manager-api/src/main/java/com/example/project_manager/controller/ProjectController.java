@@ -64,7 +64,6 @@ public class ProjectController {
 
         String s = sort.trim();
 
-        // Suporta formato JSON-like: ["name","-budget"]
         if (s.startsWith("[") && s.endsWith("]")) {
             String inner = s.substring(1, s.length() - 1).trim();
             if (inner.isBlank()) {
@@ -87,11 +86,6 @@ public class ProjectController {
             return sortResult;
         }
 
-        // Formatos comuns de Spring/Data:
-        // - name
-        // - -name
-        // - name,desc
-        // - name:desc
         if (s.startsWith("-") && s.length() > 1) {
             return Sort.by(Sort.Direction.DESC, s.substring(1));
         }

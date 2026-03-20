@@ -71,7 +71,7 @@ class PortfolioReportControllerTest {
     @DisplayName("GET /api/portfolio/report/pdf deve retornar 200 com PDF")
     void shouldReturnPdfReport() throws Exception {
         PortfolioReportDTO report = buildSampleReport();
-        byte[] fakePdf = new byte[]{0x25, 0x50, 0x44, 0x46}; // %PDF
+        byte[] fakePdf = new byte[]{0x25, 0x50, 0x44, 0x46};
 
         when(reportService.generateReport()).thenReturn(report);
         when(jasperReportService.generatePortfolioPdf(any(PortfolioReportDTO.class))).thenReturn(fakePdf);

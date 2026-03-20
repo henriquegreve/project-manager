@@ -1,2 +1,3 @@
-# project-manager
-Gerenciador de projetos
+# project-manager-api
+
+Veja o README principal na raiz do repositorio: `README.md`.
